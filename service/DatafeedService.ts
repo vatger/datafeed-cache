@@ -81,18 +81,15 @@ async function getDatafeed(): Promise<DatafeedModel | null>
     return datafeedStatus.data;
 }
 
-async function getCachedDatafeed(): Promise<DatafeedModel & {last_update_failed: boolean} | null>
+async function getCachedDatafeed(): Promise<DatafeedModel | null>
 {
+    // Check if cached value is empty
     if (datafeedStatus.data != null)
     {
-        return {...datafeedStatus.data, last_update_failed: datafeedStatus.last_update_failed};
+        return datafeedStatus.data;
     }
 
-    const datafeed: DatafeedModel | null = await getDatafeed();
-    if (datafeed == null)
-        return null;
-
-    return {...datafeed, last_update_failed: datafeedStatus.last_update_failed};
+    return await getDatafeed()
 }
 
 export default {
