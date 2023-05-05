@@ -11,5 +11,7 @@ GlobalRouter.get("/datafeed/pilots", DatafeedController.getDatafeedPilots);
 GlobalRouter.get("/datafeed/atis", DatafeedController.getDatafeedAtis);
 GlobalRouter.get("/datafeed/servers", DatafeedController.getDatafeedServers);
 
+// VATGER Specific Routes
 GlobalRouter.get("/datafeed/controllers/ger", DatafeedVatgerController.getVatgerControllers);
 GlobalRouter.get("/datafeed/pilots/ger", DatafeedVatgerController.getVatgerPilots);
+GlobalRouter.get("/datafeed/atis/ger", DatafeedVatgerController.getVatgerAtis);
