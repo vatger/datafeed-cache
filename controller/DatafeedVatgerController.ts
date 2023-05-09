@@ -21,6 +21,7 @@ const germanyPolygon: Array<Array<number>> =
 async function getVatgerControllers(request: Request, response: Response)
 {
     const datafeed: DatafeedModel | null = await DatafeedService.getCachedDatafeed();
+    const failed = DatafeedService.getUpdateFailed();
     if (datafeed == null)
     {
         response.status(500).send({});
@@ -31,12 +32,17 @@ async function getVatgerControllers(request: Request, response: Response)
         return ((c.callsign.startsWith("ED") || c.callsign.startsWith("ET")) && c.frequency != "199.998");
     });
 
-    response.send(atc);
+    response.send({
+        data: atc,
+        length: atc.length,
+        failed: failed
+    });
 }
 
 async function getVatgerPilots(request: Request, response: Response)
 {
     const datafeed: DatafeedModel | null = await DatafeedService.getCachedDatafeed();
+    const failed = DatafeedService.getUpdateFailed();
     if (datafeed == null)
     {
         response.status(500).send({});
@@ -50,14 +56,16 @@ async function getVatgerPilots(request: Request, response: Response)
     });
 
     response.send({
-        count: pilots.length,
-        pilots: pilots
+        data: pilots,
+        length: pilots.length,
+        failed: failed
     });
 }
 
 async function getVatgerAtis(request: Request, response: Response)
 {
     const datafeed: DatafeedModel | null = await DatafeedService.getCachedDatafeed();
+    const failed = DatafeedService.getUpdateFailed();
     if (datafeed == null)
     {
         response.status(500).send({});
@@ -68,7 +76,11 @@ async function getVatgerAtis(request: Request, response: Response)
         return ((a.callsign.startsWith("ED") || a.callsign.startsWith("ET")) && a.frequency != "199.998");
     });
 
-    response.send(atis);
+    response.send({
+        data: atis,
+        length: atis.length,
+        failed: failed
+    });
 }
 
 export default {

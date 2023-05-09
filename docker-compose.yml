@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  datafeed-cache:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '8000:8000/tcp'
+    environment:
+      - APP_HOST
+      - APP_PORT
