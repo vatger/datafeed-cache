@@ -65,7 +65,8 @@ async function getDatafeed(): Promise<DatafeedModel | null>
     }
 
     // Check if both update timestamps are equal -> No update
-    if ((<DatafeedModel>res.data).general?.update == datafeedStatus.data?.general.update && (<DatafeedModel>res.data).pilots.length == 0) {
+    // The chance that zero pilots are online is miniscule, such that we can conclude a failed datafeed update if there are no pilots
+    if ((<DatafeedModel>res.data).general?.update == datafeedStatus.data?.general.update || (<DatafeedModel>res.data).pilots.length == 0) {
         console.error("\t Update failed!")
 
         datafeedStatus.last_update_failed = true;
