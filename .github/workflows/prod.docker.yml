@@ -1,4 +1,4 @@
-name: Docker Image CI/CD
+name: Docker CI/CD
 
 on:
   push:
@@ -9,20 +9,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  prettier:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Prettier
-        uses: creyD/prettier_action@v4.3
-        with:
-          prettier_options: "--check **/*.ts"
-          only_changed: true
-
-
   docker-image-build:
     runs-on: ubuntu-latest
     permissions:
