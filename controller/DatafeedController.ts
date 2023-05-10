@@ -1,19 +1,17 @@
-import {Request, Response} from "express";
-import DatafeedService from "../service/DatafeedService";
+import { Request, Response } from 'express';
+import DatafeedService from '../service/DatafeedService';
 
-async function getDatafeed(request: Request, response: Response)
-{
+async function getDatafeed(request: Request, response: Response) {
     const datafeed = await DatafeedService.getCachedDatafeed();
     const failed = DatafeedService.getUpdateFailed();
 
     response.send({
         data: datafeed,
-        failed: failed
+        failed: failed,
     });
 }
 
-async function getDatafeedGeneral(request: Request, response: Response)
-{
+async function getDatafeedGeneral(request: Request, response: Response) {
     const datafeed = await DatafeedService.getCachedDatafeed();
     const failed = DatafeedService.getUpdateFailed();
 
@@ -22,58 +20,53 @@ async function getDatafeedGeneral(request: Request, response: Response)
         controller_length: datafeed?.controllers.length,
         pilots_length: datafeed?.pilots.length,
         atis_length: datafeed?.atis.length,
-        failed: failed
+        failed: failed,
     });
 }
 
-async function getDatafeedControllers(request: Request, response: Response)
-{
+async function getDatafeedControllers(request: Request, response: Response) {
     const datafeed = await DatafeedService.getCachedDatafeed();
     const failed = DatafeedService.getUpdateFailed();
 
     response.send({
         data: datafeed?.controllers,
         length: datafeed?.controllers.length,
-        failed: failed
+        failed: failed,
     });
 }
 
-async function getDatafeedPilots(request: Request, response: Response)
-{
+async function getDatafeedPilots(request: Request, response: Response) {
     const datafeed = await DatafeedService.getCachedDatafeed();
     const failed = DatafeedService.getUpdateFailed();
 
     response.send({
         data: datafeed?.pilots,
         length: datafeed?.pilots.length,
-        failed: failed
+        failed: failed,
     });
 }
 
-async function getDatafeedAtis(request: Request, response: Response)
-{
+async function getDatafeedAtis(request: Request, response: Response) {
     const datafeed = await DatafeedService.getCachedDatafeed();
     const failed = DatafeedService.getUpdateFailed();
 
     response.send({
         data: datafeed?.atis,
         length: datafeed?.atis.length,
-        failed: failed
+        failed: failed,
     });
 }
 
-async function getDatafeedServers(request: Request, response: Response)
-{
+async function getDatafeedServers(request: Request, response: Response) {
     const datafeed = await DatafeedService.getCachedDatafeed();
     const failed = DatafeedService.getUpdateFailed();
 
     response.send({
         data: datafeed?.servers,
         length: datafeed?.servers.length,
-        failed: failed
+        failed: failed,
     });
 }
-
 
 export default {
     getDatafeed,
@@ -81,5 +74,5 @@ export default {
     getDatafeedControllers,
     getDatafeedPilots,
     getDatafeedAtis,
-    getDatafeedServers
-}
+    getDatafeedServers,
+};

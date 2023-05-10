@@ -8,7 +8,7 @@ export type DatafeedModel = {
     facilities: Array<DatafeedModelFacility>;
     ratings: Array<DatafeedModelRating>;
     pilot_ratings: Array<DatafeedModelPilotRating>;
-}
+};
 
 export type DatafeedModelGeneral = {
     version: number;
@@ -17,7 +17,7 @@ export type DatafeedModelGeneral = {
     update_timestamp: string;
     connected_clients: number;
     unique_users: number;
-}
+};
 
 export type DatafeedModelPilot = {
     cid: number;
@@ -38,7 +38,7 @@ export type DatafeedModelPilot = {
 
     logon_time: string;
     last_updated: string;
-}
+};
 
 export type DatafeedModelPrefile = {
     cid: number;
@@ -48,7 +48,7 @@ export type DatafeedModelPrefile = {
     flight_plan: DatafeedModelPilotFlightPlan;
 
     last_updated: string;
-}
+};
 
 type DatafeedModelPilotFlightPlan = {
     flight_rules: string;
@@ -67,7 +67,7 @@ type DatafeedModelPilotFlightPlan = {
     route: string;
     revision_id: number;
     assigned_transponder: string;
-}
+};
 
 export type DatafeedModelController = {
     cid: number;
@@ -81,7 +81,7 @@ export type DatafeedModelController = {
     text_atis?: Array<string>;
     last_updated: string;
     logon_time: string;
-}
+};
 
 export type DatafeedModelAtis = {
     cid: number;
@@ -96,7 +96,7 @@ export type DatafeedModelAtis = {
     text_atis: Array<string>;
     last_updated: string;
     logon_time: string;
-}
+};
 
 export type DatafeedModelServer = {
     ident: string;
@@ -106,22 +106,22 @@ export type DatafeedModelServer = {
     clients_connection_allowed: number;
     client_connections_allowed: boolean;
     is_sweatbox: boolean;
-}
+};
 
 export type DatafeedModelFacility = {
     id: number;
     short: string;
     long: string;
-}
+};
 
 export type DatafeedModelRating = {
     id: number;
     short: string;
     long: string;
-}
+};
 
 export type DatafeedModelPilotRating = {
     id: number;
     short_name: string;
     long_name: string;
-}
+};

@@ -1,0 +1,13 @@
+# Folders
+.github
+dist
+node_modules
+
+# Files
+*.md
+*.json
+.gitignore
+.prettier*
+Dockerfile
+docker-compose.yml
+LICENSE

@@ -8,4 +8,4 @@ export type VatsimStatusModel = {
     };
     user: Array<string>;
     metar: Array<string>;
-}
+};
