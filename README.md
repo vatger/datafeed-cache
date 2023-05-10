@@ -1,3 +1,5 @@
+[![Docker Image CD](https://github.com/vatger/datafeed-cache/actions/workflows/docker-image-main.yml/badge.svg?branch=main)](https://github.com/vatger/datafeed-cache/actions/workflows/docker-image-main.yml)
+
 # Datafeed Cache
 
 The Datafeed Cache project is a wrapper around [VATSIM's Datafeed service](https://data.vatsim.net/v3/vatsim-data.json) which provides basic caching functionality
