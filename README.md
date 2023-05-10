@@ -1,4 +1,4 @@
-[![Docker Image CD](https://github.com/vatger/datafeed-cache/actions/workflows/docker-image-main.yml/badge.svg?branch=main)](https://github.com/vatger/datafeed-cache/actions/workflows/docker-image-main.yml)
+[![Code style check](https://github.com/vatger/datafeed-cache/actions/workflows/dev.workflow.yml/badge.svg?branch=dev)](https://github.com/vatger/datafeed-cache/actions/workflows/dev.workflow.yml)
 
 # Datafeed Cache
 
