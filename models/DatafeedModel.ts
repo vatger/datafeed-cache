@@ -74,11 +74,11 @@ export type DatafeedModelController = {
     name: string;
     callsign: string;
     frequency: string;
-    facility: 0;
-    rating: 1;
+    facility: number;
+    rating: number;
     server: string;
     visual_range: number;
-    text_atis: Array<string> | null;
+    text_atis?: Array<string>;
     last_updated: string;
     logon_time: string;
 }

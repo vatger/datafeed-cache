@@ -93,7 +93,12 @@ async function getCachedDatafeed(): Promise<DatafeedModel | null>
     return await getDatafeed()
 }
 
+function getUpdateFailed(): boolean {
+    return datafeedStatus.last_update_failed;
+}
+
 export default {
     getDatafeed,
     getCachedDatafeed,
+    getUpdateFailed
 }
