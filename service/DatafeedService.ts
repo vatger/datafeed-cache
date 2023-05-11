@@ -41,7 +41,7 @@ async function getDatafeedURL(): Promise<boolean> {
 }
 
 async function getDatafeed(): Promise<DatafeedModel | null> {
-    if (datafeedStatus.url == null || !(await getDatafeedURL())) {
+    if (!(await getDatafeedURL())) {
         return null;
     }
 
