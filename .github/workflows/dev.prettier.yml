@@ -2,7 +2,7 @@ name: Code-Style Check
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 env:
   REGISTRY: ghcr.io
