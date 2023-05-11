@@ -53,6 +53,7 @@ async function getDatafeed(): Promise<DatafeedModel | null> {
     } catch (e: any) {
         console.error('Failed to update Datafeed: ', e.message);
         datafeedStatus.last_update_failed = true;
+        return null;
     }
 
     // Check if response looks good
