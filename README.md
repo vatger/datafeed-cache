@@ -25,7 +25,7 @@ If you wish to contribute and/or make changes, please check out our contribution
 
 ### Using Node.js
 
-Assuming node.js is installed, running the application locally should be as simple as executing the following two commands. 
+Assuming node.js is installed, running the application (locally) should be as simple as executing the following two commands. 
 
 1. Run `npm install`
 2. Run `npm run start:dev`
