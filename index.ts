@@ -7,7 +7,7 @@ const application = express();
 
 setInterval(async () => {
     await DatafeedService.getDatafeed();
-}, 1000 * 15);
+}, 1000 * Config.DATAFEED_REFRESH_INTERVAL_S);
 
 application.listen(Config.APP_PORT, Config.APP_HOST, () => {
     console.log(`Listening on port: ${Config.APP_PORT}`);

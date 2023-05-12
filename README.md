@@ -1,5 +1,5 @@
 [![Docker CI/CD](https://github.com/vatger/datafeed-cache/actions/workflows/prod.docker.yml/badge.svg)](https://github.com/vatger/datafeed-cache/actions/workflows/prod.docker.yml)
-[![Code style check](https://github.com/vatger/datafeed-cache/actions/workflows/dev.workflow.yml/badge.svg?branch=dev)](https://github.com/vatger/datafeed-cache/actions/workflows/dev.workflow.yml)
+[![Code Style](https://github.com/vatger/datafeed-cache/actions/workflows/dev.workflow.yml/badge.svg?branch=dev)](https://github.com/vatger/datafeed-cache/actions/workflows/dev.workflow.yml)
 
 # Datafeed Cache
 
