@@ -20,6 +20,9 @@ If you wish to contribute and/or make changes, please check out our contribution
 
 ## Prerequisites
 - **Node.js** (https://nodejs.org/en)
+- **Typescript** (Optional) 
+  - Typescript is included in the project's dependencies, can however be installed globally using `npm install -g typescript`. 
+  This may however not be necessary in your situation and is more of a recommendation rather than a requirement. 
 
 ## Running the Application
 
