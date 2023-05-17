@@ -1,4 +1,4 @@
-import express, {Express} from 'express';
+import express, { Express } from 'express';
 import { GlobalRouter } from './routes';
 import DatafeedService from './service/DatafeedService';
 import { Config } from './config';
