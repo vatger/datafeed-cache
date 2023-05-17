@@ -1,12 +1,15 @@
 name: Code-Style Check
 
+# Run only if a *.ts file has changed (i.e. anything relevant)
 on:
   push:
     branches: [ "dev" ]
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+    paths:
+      - "**.ts"
+  pull_request:
+    branches: [ "dev" ]
+    paths:
+      - "**.ts"
 
 jobs:
   code-style-check:
@@ -21,4 +24,3 @@ jobs:
         with:
           dry: true
           prettier_options: "--check **/*.ts"
-          only_changed: true

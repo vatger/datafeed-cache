@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "tsc && node ./dist/index.js",
-    "start:prod": "npm run build && node dist/index.js",
     "build": "rimraf ./dist && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:prod": "npm run build && node dist/index.js"
   },
   "keywords": [],
   "author": "",

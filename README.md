@@ -1,5 +1,5 @@
 [![Docker CI/CD](https://github.com/vatger/datafeed-cache/actions/workflows/prod.docker.yml/badge.svg)](https://github.com/vatger/datafeed-cache/actions/workflows/prod.docker.yml)
-[![Code style check](https://github.com/vatger/datafeed-cache/actions/workflows/dev.workflow.yml/badge.svg?branch=dev)](https://github.com/vatger/datafeed-cache/actions/workflows/dev.workflow.yml)
+[![Code-Style Check](https://github.com/vatger/datafeed-cache/actions/workflows/dev.prettier.yml/badge.svg?branch=dev)](https://github.com/vatger/datafeed-cache/actions/workflows/dev.prettier.yml)
 
 # Datafeed Cache
 
@@ -20,12 +20,15 @@ If you wish to contribute and/or make changes, please check out our contribution
 
 ## Prerequisites
 - **Node.js** (https://nodejs.org/en)
+- **Typescript** (Optional) 
+  - Typescript is included in the project's dependencies, can however be installed globally using `npm install -g typescript`. 
+  This may however not be necessary in your situation and is more of a recommendation rather than a requirement. 
 
 ## Running the Application
 
 ### Using Node.js
 
-Assuming node.js is installed, running the application locally should be as simple as executing the following two commands. 
+Assuming node.js is installed, running the application (locally) should be as simple as executing the following two commands. 
 
 1. Run `npm install`
 2. Run `npm run start:dev`
