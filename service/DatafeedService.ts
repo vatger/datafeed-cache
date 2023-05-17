@@ -50,6 +50,9 @@ async function getDatafeed(): Promise<DatafeedModel | null> {
     let res: AxiosResponse | undefined = undefined;
     try {
         res = await axios.get(datafeedStatus.url);
+
+        // Check for valid JSON
+        JSON.parse(JSON.stringify((<DatafeedModel>res?.data).general));
     } catch (e: any) {
         console.error('Failed to update Datafeed: ', e.message);
         datafeedStatus.last_update_failed = true;
@@ -62,14 +65,12 @@ async function getDatafeed(): Promise<DatafeedModel | null> {
     }
 
     // Check if both update timestamps are equal -> No update
-    // The chance that zero pilots are online is miniscule, such that we can conclude a failed datafeed update if there are no pilots
+    // The chance that zero pilots are online is minuscule, such that we can conclude a failed datafeed update if there are no pilots
     if (
-        (<DatafeedModel>res.data).general?.update ==
-            datafeedStatus.data?.general.update ||
+        (datafeedStatus.data != null && Math.abs(datafeedStatus.data.pilots.length - (<DatafeedModel>res.data).pilots.length) > 75) ||
         (<DatafeedModel>res.data).pilots.length == 0
     ) {
-        console.error('\t Update failed!');
-
+        console.error('\t Update failed! Previous Pilot Count: ', datafeedStatus.data?.pilots.length, " | Current Pilot Count: ", (<DatafeedModel>res.data).pilots.length);
         datafeedStatus.last_update_failed = true;
         return datafeedStatus.data;
     }

@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  datafeed-cache:
+  dfcache:
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,3 +12,4 @@ services:
     environment:
       - APP_HOST
       - APP_PORT
+      - DATAFEED_REFRESH_INTERVAL_S
