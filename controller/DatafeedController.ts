@@ -68,6 +68,31 @@ async function getDatafeedServers(request: Request, response: Response) {
     });
 }
 
+async function getDatafeedPilotRatings(request: Request, response: Response) {
+    const datafeed = await DatafeedService.getCachedDatafeed();
+    const failed = DatafeedService.getUpdateFailed();
+
+    response.send({
+        data: datafeed?.pilot_ratings,
+        length: datafeed?.pilot_ratings.length,
+        failed: failed,
+    });
+}
+
+async function getDatafeedMilitaryRatings(
+    request: Request,
+    response: Response
+) {
+    const datafeed = await DatafeedService.getCachedDatafeed();
+    const failed = DatafeedService.getUpdateFailed();
+
+    response.send({
+        data: datafeed?.military_ratings,
+        length: datafeed?.pilot_ratings.length,
+        failed: failed,
+    });
+}
+
 export default {
     getDatafeed,
     getDatafeedGeneral,
@@ -75,4 +100,6 @@ export default {
     getDatafeedPilots,
     getDatafeedAtis,
     getDatafeedServers,
+    getDatafeedPilotRatings,
+    getDatafeedMilitaryRatings,
 };
