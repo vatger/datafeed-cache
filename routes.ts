@@ -13,8 +13,14 @@ GlobalRouter.get(
 GlobalRouter.get('/datafeed/pilots', DatafeedController.getDatafeedPilots);
 GlobalRouter.get('/datafeed/atis', DatafeedController.getDatafeedAtis);
 GlobalRouter.get('/datafeed/servers', DatafeedController.getDatafeedServers);
-GlobalRouter.get('/datafeed/pilot_ratings', DatafeedController.getDatafeedPilotRatings);
-GlobalRouter.get('/datafeed/military_ratings', DatafeedController.getDatafeedMilitaryRatings);
+GlobalRouter.get(
+    '/datafeed/pilot_ratings',
+    DatafeedController.getDatafeedPilotRatings
+);
+GlobalRouter.get(
+    '/datafeed/military_ratings',
+    DatafeedController.getDatafeedMilitaryRatings
+);
 
 // VATGER Specific Routes
 GlobalRouter.get(

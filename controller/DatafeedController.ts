@@ -79,7 +79,10 @@ async function getDatafeedPilotRatings(request: Request, response: Response) {
     });
 }
 
-async function getDatafeedMilitaryRatings(request: Request, response: Response) {
+async function getDatafeedMilitaryRatings(
+    request: Request,
+    response: Response
+) {
     const datafeed = await DatafeedService.getCachedDatafeed();
     const failed = DatafeedService.getUpdateFailed();
 
@@ -98,5 +101,5 @@ export default {
     getDatafeedAtis,
     getDatafeedServers,
     getDatafeedPilotRatings,
-    getDatafeedMilitaryRatings
+    getDatafeedMilitaryRatings,
 };
