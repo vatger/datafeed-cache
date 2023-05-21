@@ -8,6 +8,7 @@ export type DatafeedModel = {
     facilities: Array<DatafeedModelFacility>;
     ratings: Array<DatafeedModelRating>;
     pilot_ratings: Array<DatafeedModelPilotRating>;
+    military_ratings: Array<DatafeedModelMilitaryRating>;
 };
 
 export type DatafeedModelGeneral = {
@@ -25,6 +26,7 @@ export type DatafeedModelPilot = {
     callsign: string;
     server: string;
     pilot_rating: number;
+    military_rating: number;
     latitude: number;
     longitude: number;
     altitude: number;
@@ -125,3 +127,9 @@ export type DatafeedModelPilotRating = {
     short_name: string;
     long_name: string;
 };
+
+export type DatafeedModelMilitaryRating = {
+    id: number;
+    short_name: string;
+    long_name: string;
+}
