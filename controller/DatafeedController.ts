@@ -88,7 +88,7 @@ async function getDatafeedMilitaryRatings(
 
     response.send({
         data: datafeed?.military_ratings,
-        length: datafeed?.pilot_ratings.length,
+        length: datafeed?.military_ratings.length,
         failed: failed,
     });
 }
