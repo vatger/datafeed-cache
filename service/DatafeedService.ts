@@ -16,6 +16,8 @@ let datafeedStatus: DatafeedStatus = {
     last_update_failed: false,
 };
 
+let same_timestamp_count = 0;
+
 async function getDatafeedURL(): Promise<boolean> {
     // Check if we need to query URL again
     if (datafeedStatus.url != null) {
@@ -45,7 +47,7 @@ async function getDatafeed(): Promise<DatafeedModel | null> {
         return null;
     }
 
-    console.log(new Date(), 'Updating Datafeed');
+    console.log(new Date().toISOString(), 'Updating Datafeed');
 
     let res: AxiosResponse | undefined = undefined;
     try {
@@ -64,32 +66,39 @@ async function getDatafeed(): Promise<DatafeedModel | null> {
         return null;
     }
 
+    const df = res.data as DatafeedModel;
+
+    if (datafeedStatus.data?.general.update_timestamp == df.general.update_timestamp) {
+        same_timestamp_count++;
+    } else {
+        same_timestamp_count = 0;
+    }
+
     // Check if both update timestamps are equal -> No update
     // The chance that zero pilots are online is minuscule, such that we can conclude a failed datafeed update if there are no pilots
+    // Also, if we queried multiple times and the same timestamp was found 6 times, then we can be pretty sure that the datafeed failed
     if (
         (datafeedStatus.data != null &&
-            Math.abs(
-                datafeedStatus.data.pilots.length -
-                    (<DatafeedModel>res.data).pilots.length
-            ) > 75) ||
-        (<DatafeedModel>res.data).pilots.length == 0
+            (Math.abs(datafeedStatus.data.pilots.length - df.pilots.length) > 75) || df.pilots.length == 0 || same_timestamp_count > 5)
     ) {
         console.error(
             '\t Update failed! Previous Pilot Count: ',
             datafeedStatus.data?.pilots.length,
             ' | Current Pilot Count: ',
-            (<DatafeedModel>res.data).pilots.length
+            df.pilots.length,
+            ' | Same Timestamp count: ',
+            same_timestamp_count
         );
         datafeedStatus.last_update_failed = true;
         return datafeedStatus.data;
     }
 
     // Set values if all looks fine
-    datafeedStatus.data = res.data as DatafeedModel;
+    datafeedStatus.data = df;
     datafeedStatus.last_update_failed = false;
 
     console.log(
-        `\t Done: ${datafeedStatus.data.controllers.length} Controllers, ${datafeedStatus.data.pilots.length} Pilots`
+        `\t Done: ${datafeedStatus.data.controllers.length} Controllers, ${datafeedStatus.data.pilots.length} Pilots, Timestamp: ${datafeedStatus.data.general.update_timestamp} (Same Timestamp: ${same_timestamp_count})`
     );
 
     return datafeedStatus.data;
