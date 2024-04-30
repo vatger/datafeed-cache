@@ -79,7 +79,7 @@ async function getDatafeed(): Promise<DatafeedModel | null> {
     // Also, if we queried multiple times and the same timestamp was found 6 times, then we can be pretty sure that the datafeed failed
     if (
         (datafeedStatus.data != null &&
-            (Math.abs(datafeedStatus.data.pilots.length - df.pilots.length) > 75) || df.pilots.length == 0 || same_timestamp_count > 5)
+            (Math.abs(datafeedStatus.data.pilots.length - df.pilots.length) > 500) || df.pilots.length == 0 || same_timestamp_count > 5)
     ) {
         console.error(
             '\t Update failed! Previous Pilot Count: ',
