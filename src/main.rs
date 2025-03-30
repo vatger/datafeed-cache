@@ -2,6 +2,7 @@ use crate::api::init_api;
 use crate::vatsim::DatafeedSharedState;
 use crate::vatsim::datafeed::DatafeedStatus;
 use env_logger;
+use log::info;
 use vatsim::status::VatsimStatus;
 
 mod api;
@@ -13,6 +14,7 @@ async fn main() {
 
     let shared_datafeed: DatafeedSharedState = DatafeedStatus::new().into();
     let datafeed_url = VatsimStatus::get_datafeed_url().await;
+    info!("Selected Datafeed-URL: {}", datafeed_url);
 
     tokio::task::spawn({
         let shared_datafeed = shared_datafeed.clone();

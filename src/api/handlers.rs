@@ -7,7 +7,9 @@ use crate::vatsim::types::{
     DatafeedServer,
 };
 use actix_web::HttpResponse;
+use chrono::Utc;
 use geo::{Contains, Coord};
+use serde::Serialize;
 
 #[actix_web::get("")]
 async fn get_datafeed(data: ApiStateData) -> HttpResponse {
@@ -202,5 +204,25 @@ async fn get_ger_atis_datafeed(data: ApiStateData) -> HttpResponse {
         data: &atis,
         length: atis.len(),
         failed: status.failed,
+    })
+}
+
+///
+/// Health-Check endpoint
+///
+/// /health-check
+///
+
+#[actix_web::get("/health-check")]
+async fn get_health_check() -> HttpResponse {
+    #[derive(Serialize)]
+    struct Response {
+        build_hash: String,
+        timestamp: i64,
+    }
+
+    HttpResponse::Ok().json(Response {
+        build_hash: std::env::var("COMMIT_SHA").unwrap_or_else(|_| "Err reading env".into()),
+        timestamp: Utc::now().timestamp(),
     })
 }

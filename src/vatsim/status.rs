@@ -1,3 +1,4 @@
+use log::warn;
 use rand::Rng;
 use serde::Deserialize;
 
@@ -23,8 +24,14 @@ impl VatsimStatus {
     pub(crate) async fn get_datafeed_url() -> String {
         let response = reqwest::get(VATSIM_STATUS_URL).await;
         let status: VatsimStatus = match response {
-            Ok(res) => res.json::<VatsimStatus>().await.unwrap_or_default(),
-            Err(_) => Self::default(),
+            Ok(res) => res.json::<VatsimStatus>().await.unwrap_or_else(|err| {
+                warn!("Falling back to default VatsimStatus. Error: {err}");
+                Self::default()
+            }),
+            Err(err) => {
+                warn!("Falling back to default VatsimStatus. Error: {err}");
+                Self::default()
+            }
         };
 
         Self::select_random_url(&status.data.v3)

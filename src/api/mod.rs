@@ -31,6 +31,7 @@ pub(crate) async fn init_api(shared_datafeed: DatafeedSharedState) -> std::io::R
                     .service(handlers::get_ger_pilots_datafeed)
                     .service(handlers::get_ger_atis_datafeed),
             )
+            .service(handlers::get_health_check)
     })
     .bind("0.0.0.0:8000")?
     .run()

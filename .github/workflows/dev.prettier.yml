@@ -17,6 +17,10 @@ jobs:
       packages: write
 
     steps:
+      - name: Extract commit SHA
+        run:
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -29,5 +33,5 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build --pull -t ${{ env.REGISTRY }}/${{ github.repository }}:dev .
+          docker build --pull --build-arg COM_SHA=${{ env.SHORT_SHA }} -t ${{ env.REGISTRY }}/${{ github.repository }}:dev .
           docker push ${{ env.REGISTRY }}/${{ github.repository }}:dev
