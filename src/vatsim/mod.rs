@@ -1,9 +1,8 @@
-use crate::vatsim::datafeed_status::DatafeedStatus;
+use crate::vatsim::datafeed::DatafeedStatus;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 
 pub(crate) mod datafeed;
-pub(crate) mod datafeed_status;
 pub(crate) mod status;
 pub(crate) mod types;
 

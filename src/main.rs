@@ -1,6 +1,6 @@
 use crate::api::init_api;
 use crate::vatsim::DatafeedSharedState;
-use crate::vatsim::datafeed_status::DatafeedStatus;
+use crate::vatsim::datafeed::DatafeedStatus;
 use env_logger;
 use vatsim::status::VatsimStatus;
 

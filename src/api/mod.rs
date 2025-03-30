@@ -18,7 +18,7 @@ pub(crate) async fn init_api(shared_datafeed: DatafeedSharedState) -> std::io::R
                 "%a \"%r\" %s \"%{User-Agent}i\" %Ts",
             ))
             .service(
-                web::scope("/vatsim")
+                web::scope("/datafeed")
                     .service(handlers::get_datafeed)
                     .service(handlers::get_general_datafeed)
                     .service(handlers::get_controllers_datafeed)

@@ -12,6 +12,21 @@ use std::ops::Sub;
 const UPDATE_DATAFEED_INTERVAL_SECS: u64 = 15;
 
 #[derive(Serialize, Deserialize, Debug)]
+pub(crate) struct DatafeedStatus {
+    pub data: Option<Datafeed>,
+    pub failed: bool,
+}
+
+impl DatafeedStatus {
+    pub(crate) fn new() -> Self {
+        Self {
+            data: None,
+            failed: true,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub(crate) struct Datafeed {
     pub general: DatafeedGeneral,
     pub pilots: Vec<DatafeedPilot>,
