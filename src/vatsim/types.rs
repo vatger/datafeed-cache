@@ -77,7 +77,7 @@ pub struct DatafeedAtis {
     pub rating: i32,
     pub server: String,
     pub visual_range: u32,
-    pub atis_code: String,
+    pub atis_code: Option<String>,
     pub text_atis: Option<Vec<String>>,
     pub last_updated: DateTime<Utc>,
     pub logon_time: DateTime<Utc>,
