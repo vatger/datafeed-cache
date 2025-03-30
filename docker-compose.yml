@@ -1,15 +1,17 @@
-version: '3.8'
-
 services:
-  dfcache:
+  df-cache:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
     ports:
-      - '8000:8000/tcp'
+      - "8007:8000/tcp"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health-check" ]
+      interval: 5m
+      timeout: 20s
+      retries: 3
+      start_period: 5s
+      start_interval: 10s
     environment:
-      - APP_HOST
-      - APP_PORT
-      - DATAFEED_REFRESH_INTERVAL_S
+      - RUST_LOG=info

@@ -1,13 +1,19 @@
-FROM node:alpine
+FROM rust:1.85-bookworm AS builder
 
-WORKDIR /opt/datafeed_cache
-
-ARG NODE_ENV=production
-
-COPY package*.json ./
-
-RUN npm install --quiet --unsafe-perm --no-progress --no-audit
-
+WORKDIR /tmp/dfcache
 COPY . .
 
-CMD npm run start:prod
+RUN cargo build --release
+
+FROM debian:bookworm-20210816-slim
+RUN apt update && apt install -y openssl ca-certificates curl && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /tmp/dfcache/target/release/df-cache /usr/local/bin/df-cache
+
+ARG COM_SHA="0000000"
+ENV COMMIT_SHA=${COM_SHA}
+ENV RUST_LOG=info
+
+EXPOSE 8000
+
+CMD ["df-cache"]
+

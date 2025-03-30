@@ -1,26 +1,36 @@
-name: Code-Style Check
+name: Build dev image
 
-# Run only if a *.ts file has changed (i.e. anything relevant)
 on:
-  push:
-    branches: [ "dev" ]
-    paths:
-      - "**.ts"
   pull_request:
-    branches: [ "dev" ]
-    paths:
-      - "**.ts"
+    branches: [ "main" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  code-style-check:
+  docker-image-build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Extract commit SHA
+        run:
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
-      - name: Prettier Check
-        uses: creyD/prettier_action@v4.3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Docker Login
+        uses: docker/login-action@v3
         with:
-          dry: true
-          prettier_options: "--check **/*.ts"
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build --pull --build-arg COM_SHA=${{ env.SHORT_SHA }} -t ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.SHORT_SHA }} .
+          docker push ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.SHORT_SHA }}
