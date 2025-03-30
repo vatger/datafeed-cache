@@ -45,7 +45,7 @@ pub struct DatafeedPilot {
     pub groundspeed: i32,
     pub transponder: String,
     pub heading: u16,
-    pub qnh_i_hg: i32,
+    pub qnh_i_hg: f32,
     pub qnh_mb: i32,
     pub flight_plan: Option<DatafeedFlightPlan>,
     pub logon_time: DateTime<Utc>,
