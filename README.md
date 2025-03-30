@@ -1,5 +1,5 @@
 [![Docker CI/CD](https://github.com/vatger/datafeed-cache/actions/workflows/prod.docker.yml/badge.svg)](https://github.com/vatger/datafeed-cache/actions/workflows/prod.docker.yml)
-[![Code-Style Check](https://github.com/vatger/datafeed-cache/actions/workflows/dev.prettier.yml/badge.svg?branch=dev)](https://github.com/vatger/datafeed-cache/actions/workflows/dev.prettier.yml)
+[![Code-Style Check](https://github.com/vatger/datafeed-cache/actions/workflows/dev.prettier.yml/badge.svg)](https://github.com/vatger/datafeed-cache/actions/workflows/dev.prettier.yml)
 
 # Datafeed Cache
 
@@ -19,21 +19,15 @@ If you wish to contribute and/or make changes, please check out our contribution
 | Nikolas G. - 1373921 |        *        | `git[at]vatger.de` |
 
 ## Prerequisites
-- **Node.js** (https://nodejs.org/en)
-- **Typescript** (Optional) 
-  - Typescript is included in the project's dependencies, can however be installed globally using `npm install -g typescript`. 
-  This may however not be necessary in your situation and is more of a recommendation rather than a requirement. 
-
-## Running the Application
-
-### Using Node.js
-
-Assuming node.js is installed, running the application (locally) should be as simple as executing the following two commands. 
-
-1. Run `npm install`
-2. Run `npm run start:dev`
+- **Rust** (tested with version 1.85.1)
+- **Cargo**
 
 ### Using Docker
 
-Using the included `docker-compose.yml` you should simply be able to build and run the application. 
-The included compose file exposes port `8000` on the host by default, however can be configured at will to fit any deployment scheme.
+Using Docker is possibly the easiest way to deploy the application. Using the included `docker-compose.yml`, you should 
+simply be able to build and run the application by running `docker compose up`.
+The included compose file exposes port `8000` on the host by default, however can be configured at will to fit any 
+deployment scheme.
+
+## Running the Application
+`cargo run`
