@@ -1,0 +1,15 @@
+[package]
+name = "df-cache"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = {version = "1.44.1", features = ["macros", "rt-multi-thread", "time"]}
+actix-web = { version = "4.10.2" }
+reqwest = {version = "0.12.15", features = ["json"]}
+serde = {version = "1.0.219", features = ["derive"]}
+chrono = {version = "0.4.40", features = ["serde"]}
+rand = "0.9.0"
+env_logger = "0.11.7"
+log = "0.4.27"
+geo = { version = "0.30.0" }

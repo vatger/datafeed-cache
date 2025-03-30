@@ -1,15 +1,11 @@
-version: '3.8'
+version: "1"
 
 services:
-  dfcache:
+  df-cache:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
     ports:
-      - '8000:8000/tcp'
+      - "8000:8000/tcp"
     environment:
-      - APP_HOST
-      - APP_PORT
-      - DATAFEED_REFRESH_INTERVAL_S
+      - RUST_LOG=info
