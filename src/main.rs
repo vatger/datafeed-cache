@@ -1,11 +1,11 @@
 use crate::api::init_api;
-use crate::datafeed::DatafeedSharedState;
-use crate::datafeed::datafeed_status::DatafeedStatus;
-use datafeed::status::VatsimStatus;
+use crate::vatsim::DatafeedSharedState;
+use crate::vatsim::datafeed_status::DatafeedStatus;
 use env_logger;
+use vatsim::status::VatsimStatus;
 
 mod api;
-mod datafeed;
+mod vatsim;
 
 #[tokio::main]
 async fn main() {
@@ -17,7 +17,7 @@ async fn main() {
     tokio::task::spawn({
         let shared_datafeed = shared_datafeed.clone();
         async move {
-            datafeed::datafeed::update_datafeed_loop(datafeed_url, shared_datafeed).await;
+            vatsim::datafeed::update_datafeed_loop(datafeed_url, shared_datafeed).await;
         }
     });
 

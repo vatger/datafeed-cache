@@ -1,5 +1,5 @@
-use crate::datafeed::DatafeedSharedState;
-use crate::datafeed::types::{
+use crate::vatsim::DatafeedSharedState;
+use crate::vatsim::types::{
     DatafeedAtis, DatafeedController, DatafeedFacility, DatafeedGeneral, DatafeedMilitaryRating,
     DatafeedPilot, DatafeedPilotRating, DatafeedPrefile, DatafeedRating, DatafeedServer,
 };
@@ -69,7 +69,7 @@ pub(crate) async fn update_datafeed_loop(datafeed_url: String, shared_state: Dat
             Ok(datafeed) => {
                 let mut write_guard = shared_state.write().await;
                 if datafeed.is_failed(&mut same_timestamp_count, &write_guard.data) {
-                    error!("Failed to update datafeed");
+                    error!("Failed to update vatsim");
                     write_guard.failed = true;
                     continue;
                 }

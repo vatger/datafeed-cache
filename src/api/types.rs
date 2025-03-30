@@ -1,5 +1,5 @@
-use crate::datafeed::datafeed::Datafeed;
-use crate::datafeed::types::DatafeedGeneral;
+use crate::vatsim::datafeed::Datafeed;
+use crate::vatsim::types::DatafeedGeneral;
 use serde::Serialize;
 
 #[derive(Serialize)]

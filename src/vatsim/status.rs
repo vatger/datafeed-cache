@@ -15,10 +15,10 @@ const VATSIM_STATUS_URL: &'static str = "https://status.vatsim.net/status.json";
 const VATSIM_DEFAULT_DATAFEED_URL: &'static str = "https://data.vatsim.net/v3/vatsim-data.json";
 
 impl VatsimStatus {
-    /// Retrieves a datafeed url to use from VATSIM's status page.
+    /// Retrieves a vatsim url to use from VATSIM's status page.
     ///
     /// # Returns
-    /// The selected datafeed url, or the default url in case there was an issue fetching the
+    /// The selected vatsim url, or the default url in case there was an issue fetching the
     /// newest status.json file.
     pub(crate) async fn get_datafeed_url() -> String {
         let response = reqwest::get(VATSIM_STATUS_URL).await;
@@ -31,7 +31,7 @@ impl VatsimStatus {
     }
 
     /// Selects a random string from a vector of strings. This is to be done as per VATSIM's
-    /// documentation in order to balance the load on the datafeed if this should become an issue
+    /// documentation in order to balance the load on the vatsim if this should become an issue
     /// in the future
     ///
     /// # Returns

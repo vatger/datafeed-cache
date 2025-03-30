@@ -1,4 +1,4 @@
-use crate::datafeed::datafeed_status::DatafeedStatus;
+use crate::vatsim::datafeed_status::DatafeedStatus;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 

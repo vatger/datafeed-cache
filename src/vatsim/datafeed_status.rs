@@ -1,4 +1,4 @@
-use crate::datafeed::datafeed::Datafeed;
+use crate::vatsim::datafeed::Datafeed;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]

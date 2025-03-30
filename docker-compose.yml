@@ -1,4 +1,4 @@
-version: "1"
+version: "3"
 
 services:
   df-cache:
@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:8000/tcp"
+      - "8007:8000/tcp"
+    restart: unless-stopped
     environment:
       - RUST_LOG=info

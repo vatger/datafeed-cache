@@ -2,7 +2,7 @@ use crate::api::state::ApiStateData;
 use crate::api::types::{
     DatafeedGeneralResponse, DatafeedGerListResponse, DatafeedListResponse, DatafeedResponse,
 };
-use crate::datafeed::types::{
+use crate::vatsim::types::{
     DatafeedAtis, DatafeedController, DatafeedMilitaryRating, DatafeedPilot, DatafeedPilotRating,
     DatafeedServer,
 };
@@ -132,7 +132,7 @@ async fn get_mil_pilot_ratings_datafeed(data: ApiStateData) -> HttpResponse {
 ///
 /// Below contains the handlers for the endpoints specific to VATSIM-Germany.
 ///
-/// /datafeed/ger/[...]
+/// /vatsim/ger/[...]
 ///
 
 #[actix_web::get("/controllers/ger")]

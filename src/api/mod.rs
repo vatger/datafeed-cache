@@ -1,5 +1,5 @@
 use crate::api::state::ApiState;
-use crate::datafeed::DatafeedSharedState;
+use crate::vatsim::DatafeedSharedState;
 use actix_web::middleware::TrailingSlash::Trim;
 use actix_web::{App, HttpServer, middleware, web};
 
@@ -18,7 +18,7 @@ pub(crate) async fn init_api(shared_datafeed: DatafeedSharedState) -> std::io::R
                 "%a \"%r\" %s \"%{User-Agent}i\" %Ts",
             ))
             .service(
-                web::scope("/datafeed")
+                web::scope("/vatsim")
                     .service(handlers::get_datafeed)
                     .service(handlers::get_general_datafeed)
                     .service(handlers::get_controllers_datafeed)

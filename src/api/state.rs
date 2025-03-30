@@ -1,4 +1,4 @@
-use crate::datafeed::DatafeedSharedState;
+use crate::vatsim::DatafeedSharedState;
 use geo::{LineString, Polygon};
 
 const GERMANY_POLY: &[(f64, f64)] = &[
