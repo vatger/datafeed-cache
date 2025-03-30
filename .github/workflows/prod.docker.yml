@@ -2,7 +2,7 @@ name: Build prod image
 
 on:
   push:
-    - main
+    branches: [ "main" ]
 
 env:
   REGISTRY: ghcr.io
