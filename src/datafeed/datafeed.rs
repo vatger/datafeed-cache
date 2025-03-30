@@ -3,9 +3,11 @@ use crate::datafeed::types::{
     DatafeedAtis, DatafeedController, DatafeedFacility, DatafeedGeneral, DatafeedMilitaryRating,
     DatafeedPilot, DatafeedPilotRating, DatafeedPrefile, DatafeedRating, DatafeedServer,
 };
+use chrono::{TimeDelta, Utc};
 use log::{error, info};
 use serde::{Deserialize, Serialize};
 use std::error::Error;
+use std::ops::Sub;
 
 const UPDATE_DATAFEED_INTERVAL_SECS: u64 = 15;
 
@@ -38,9 +40,11 @@ impl Datafeed {
                     *same_timestamp_count = 0;
                 }
 
+                let now = Utc::now().sub(TimeDelta::minutes(2));
                 if self.pilots.len() == 0
                     || self.pilots.len().abs_diff(previous.pilots.len()) > 500
                     || *same_timestamp_count > 5
+                    || (*same_timestamp_count > 0 && previous.general.update_timestamp < now)
                 {
                     return true;
                 }

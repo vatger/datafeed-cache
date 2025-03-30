@@ -1,17 +1,22 @@
 use crate::api::state::ApiState;
 use crate::datafeed::DatafeedSharedState;
-use actix_web::{App, HttpServer, web};
+use actix_web::middleware::TrailingSlash::Trim;
+use actix_web::{App, HttpServer, middleware, web};
 
 mod handlers;
 mod state;
 pub(crate) mod types;
 
 pub(crate) async fn init_api(shared_datafeed: DatafeedSharedState) -> std::io::Result<()> {
-    HttpServer::new(move || {
-        let shared_datafeed = shared_datafeed.clone();
+    let api_state = web::Data::new(ApiState::new(shared_datafeed));
 
+    HttpServer::new(move || {
         App::new()
-            .app_data(web::Data::new(ApiState::new(shared_datafeed)))
+            .app_data(api_state.clone())
+            .wrap(middleware::NormalizePath::new(Trim))
+            .wrap(middleware::Logger::new(
+                "%a \"%r\" %s \"%{User-Agent}i\" %Ts",
+            ))
             .service(
                 web::scope("/datafeed")
                     .service(handlers::get_datafeed)
