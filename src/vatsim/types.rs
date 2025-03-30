@@ -5,14 +5,17 @@ use serde::{Deserialize, Serialize};
 pub struct DatafeedGeneral {
     pub version: u32,
     pub reload: u32,
+    pub update: String,
     pub update_timestamp: DateTime<Utc>,
     pub connected_clients: u32,
     pub unique_users: u32,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct DatafeedPilotFlightPlan {
+pub struct DatafeedFlightPlan {
     pub flight_rules: String,
+    pub aircraft: String,
+    pub aircraft_faa: String,
     pub aircraft_short: String,
     pub departure: String,
     pub arrival: String,
@@ -24,6 +27,7 @@ pub struct DatafeedPilotFlightPlan {
     pub fuel_time: String,
     pub remarks: String,
     pub route: String,
+    pub revision_id: u32,
     pub assigned_transponder: String,
 }
 
@@ -41,8 +45,9 @@ pub struct DatafeedPilot {
     pub groundspeed: i32,
     pub transponder: String,
     pub heading: u16,
+    pub qnh_i_hg: i32,
     pub qnh_mb: i32,
-    pub flight_plan: Option<DatafeedPilotFlightPlan>,
+    pub flight_plan: Option<DatafeedFlightPlan>,
     pub logon_time: DateTime<Utc>,
     pub last_updated: DateTime<Utc>,
 }
@@ -57,6 +62,22 @@ pub struct DatafeedController {
     pub rating: i32,
     pub server: String,
     pub visual_range: u32,
+    pub text_atis: Option<Vec<String>>,
+    pub last_updated: DateTime<Utc>,
+    pub logon_time: DateTime<Utc>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct DatafeedAtis {
+    pub cid: u32,
+    pub name: String,
+    pub callsign: String,
+    pub frequency: String,
+    pub facility: i32,
+    pub rating: i32,
+    pub server: String,
+    pub visual_range: u32,
+    pub atis_code: String,
     pub text_atis: Option<Vec<String>>,
     pub last_updated: DateTime<Utc>,
     pub logon_time: DateTime<Utc>,
@@ -92,10 +113,9 @@ pub struct DatafeedPrefile {
     pub cid: u32,
     pub name: String,
     pub callsign: String,
-    pub flight_plan: DatafeedPilotFlightPlan,
+    pub flight_plan: DatafeedFlightPlan,
     pub last_updated: DateTime<Utc>,
 }
 
-pub type DatafeedAtis = DatafeedController;
 pub type DatafeedRating = DatafeedFacility;
 pub type DatafeedMilitaryRating = DatafeedPilotRating;

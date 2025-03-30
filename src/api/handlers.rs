@@ -83,7 +83,7 @@ async fn get_atis_datafeed(data: ApiStateData) -> HttpResponse {
     })
 }
 
-#[actix_web::get("/server")]
+#[actix_web::get("/servers")]
 async fn get_servers_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
     let status = &*read_lock;
