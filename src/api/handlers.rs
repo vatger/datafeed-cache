@@ -222,7 +222,7 @@ async fn get_health_check() -> HttpResponse {
     }
 
     HttpResponse::Ok().json(Response {
-        build_hash: std::env::var("COMMIT_SHA").unwrap_or_else(|_| "Err reading env".into()),
+        build_hash: std::env::var("COMMIT_SHA").unwrap_or("-------".into()),
         timestamp: Utc::now().timestamp(),
     })
 }

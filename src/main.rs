@@ -12,6 +12,11 @@ mod vatsim;
 async fn main() {
     env_logger::init();
 
+    info!(
+        "Starting Version: {}",
+        std::env::var("COMMIT_SHA").unwrap_or("-------".into())
+    );
+
     let shared_datafeed: DatafeedSharedState = DatafeedStatus::new().into();
     let datafeed_url = VatsimStatus::get_datafeed_url().await;
     info!("Selected Datafeed-URL: {}", datafeed_url);

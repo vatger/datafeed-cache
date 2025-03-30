@@ -8,5 +8,10 @@ services:
     ports:
       - "8007:8000/tcp"
     restart: unless-stopped
+    healthcheck:
+      test: [ "curl", "-f", "http://localhost:8000/health-check" ]
+      interval: 5m
+      timeout: 10s
+      retries: 3
     environment:
       - RUST_LOG=info
