@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DatafeedGeneral {
     pub version: u32,
     pub reload: u32,
@@ -115,6 +115,20 @@ pub struct DatafeedPrefile {
     pub callsign: String,
     pub flight_plan: DatafeedFlightPlan,
     pub last_updated: DateTime<Utc>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Datafeed {
+    pub general: DatafeedGeneral,
+    pub pilots: Vec<DatafeedPilot>,
+    pub controllers: Vec<DatafeedController>,
+    pub atis: Vec<DatafeedAtis>,
+    pub servers: Vec<DatafeedServer>,
+    pub prefiles: Vec<DatafeedPrefile>,
+    pub facilities: Vec<DatafeedFacility>,
+    pub ratings: Vec<DatafeedRating>,
+    pub pilot_ratings: Vec<DatafeedPilotRating>,
+    pub military_ratings: Vec<DatafeedMilitaryRating>,
 }
 
 pub type DatafeedRating = DatafeedFacility;

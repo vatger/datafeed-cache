@@ -1,9 +1,6 @@
 use crate::vatsim::DatafeedSharedState;
-use crate::vatsim::types::{
-    DatafeedAtis, DatafeedController, DatafeedFacility, DatafeedGeneral, DatafeedMilitaryRating,
-    DatafeedPilot, DatafeedPilotRating, DatafeedPrefile, DatafeedRating, DatafeedServer,
-};
 use chrono::{TimeDelta, Utc};
+use datafeed_cache_shared::datafeed::Datafeed;
 use log::{error, info};
 use serde::{Deserialize, Serialize};
 use std::error::Error;
@@ -26,21 +23,12 @@ impl DatafeedStatus {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-pub(crate) struct Datafeed {
-    pub general: DatafeedGeneral,
-    pub pilots: Vec<DatafeedPilot>,
-    pub controllers: Vec<DatafeedController>,
-    pub atis: Vec<DatafeedAtis>,
-    pub servers: Vec<DatafeedServer>,
-    pub prefiles: Vec<DatafeedPrefile>,
-    pub facilities: Vec<DatafeedFacility>,
-    pub ratings: Vec<DatafeedRating>,
-    pub pilot_ratings: Vec<DatafeedPilotRating>,
-    pub military_ratings: Vec<DatafeedMilitaryRating>,
+pub(crate) trait DatafeedExt {
+    async fn download_from_url(url: &str) -> Result<Datafeed, reqwest::Error>;
+    fn is_failed(&self, same_timestamp_count: &mut u32, previous: &Option<Datafeed>) -> bool;
 }
 
-impl Datafeed {
+impl DatafeedExt for Datafeed {
     async fn download_from_url(url: &str) -> Result<Datafeed, reqwest::Error> {
         reqwest::get(url).await?.json().await
     }

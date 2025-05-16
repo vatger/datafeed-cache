@@ -14,7 +14,7 @@ async fn main() {
 
     info!(
         "Starting Version: {}",
-        std::env::var("COMMIT_SHA").unwrap_or("-------".into())
+        std::env::var("COMMIT_SHA").unwrap_or("N/A".into())
     );
 
     let shared_datafeed: DatafeedSharedState = DatafeedStatus::new().into();
@@ -28,5 +28,7 @@ async fn main() {
         }
     });
 
-    let _ = init_api(shared_datafeed).await;
+    init_api(shared_datafeed)
+        .await
+        .expect("Failed to initialize API");
 }

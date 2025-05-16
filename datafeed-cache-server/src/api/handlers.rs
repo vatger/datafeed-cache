@@ -1,15 +1,16 @@
 use crate::api::state::ApiStateData;
-use crate::api::types::{
-    DatafeedGeneralResponse, DatafeedGerListResponse, DatafeedListResponse, DatafeedResponse,
-};
-use crate::vatsim::types::{
+use actix_web::HttpResponse;
+use chrono::Utc;
+use datafeed_cache_shared::datafeed::{
     DatafeedAtis, DatafeedController, DatafeedMilitaryRating, DatafeedPilot, DatafeedPilotRating,
     DatafeedServer,
 };
-use actix_web::HttpResponse;
-use chrono::Utc;
+use datafeed_cache_shared::response::{
+    DatafeedGeneralResponse, DatafeedGerListResponse, DatafeedListResponse, DatafeedResponse,
+};
 use geo::{Contains, Coord};
 use serde::Serialize;
+use std::borrow::Cow;
 
 #[actix_web::get("")]
 async fn get_datafeed(data: ApiStateData) -> HttpResponse {
@@ -17,7 +18,7 @@ async fn get_datafeed(data: ApiStateData) -> HttpResponse {
     let status = &*read_lock;
 
     HttpResponse::Ok().json(DatafeedResponse {
-        data: &status.data,
+        data: Cow::Borrowed(&status.data),
         failed: status.failed,
     })
 }
@@ -30,7 +31,7 @@ async fn get_general_datafeed(data: ApiStateData) -> HttpResponse {
     let datafeed = status.data.as_ref();
 
     HttpResponse::Ok().json(DatafeedGeneralResponse {
-        data: datafeed.map_or(None, |df| Some(&df.general)),
+        data: datafeed.map_or(None, |df| Some(Cow::Borrowed(&df.general))),
         controller_length: datafeed.map_or(0, |df| df.controllers.len()),
         pilots_length: datafeed.map_or(0, |df| df.pilots.len()),
         atis_length: datafeed.map_or(0, |df| df.atis.len()),
@@ -49,7 +50,7 @@ async fn get_controllers_datafeed(data: ApiStateData) -> HttpResponse {
         .map_or(&[], |df| df.controllers.as_slice());
 
     HttpResponse::Ok().json(DatafeedListResponse {
-        data: controllers,
+        data: Cow::Borrowed(controllers),
         length: controllers.len(),
         failed: status.failed,
     })
@@ -63,7 +64,7 @@ async fn get_pilots_datafeed(data: ApiStateData) -> HttpResponse {
     let pilots: &[DatafeedPilot] = status.data.as_ref().map_or(&[], |df| df.pilots.as_slice());
 
     HttpResponse::Ok().json(DatafeedListResponse {
-        data: pilots,
+        data: Cow::Borrowed(pilots),
         length: pilots.len(),
         failed: status.failed,
     })
@@ -77,7 +78,7 @@ async fn get_atis_datafeed(data: ApiStateData) -> HttpResponse {
     let atis_slice: &[DatafeedAtis] = status.data.as_ref().map_or(&[], |df| df.atis.as_slice());
 
     HttpResponse::Ok().json(DatafeedListResponse {
-        data: atis_slice,
+        data: Cow::Borrowed(atis_slice),
         length: atis_slice.len(),
         failed: status.failed,
     })
@@ -91,7 +92,7 @@ async fn get_servers_datafeed(data: ApiStateData) -> HttpResponse {
     let servers: &[DatafeedServer] = status.data.as_ref().map_or(&[], |df| df.servers.as_slice());
 
     HttpResponse::Ok().json(DatafeedListResponse {
-        data: servers,
+        data: Cow::Borrowed(servers),
         length: servers.len(),
         failed: status.failed,
     })
@@ -108,7 +109,7 @@ async fn get_pilot_ratings_datafeed(data: ApiStateData) -> HttpResponse {
         .map_or(&[], |df| df.pilot_ratings.as_slice());
 
     HttpResponse::Ok().json(DatafeedListResponse {
-        data: pilot_ratings,
+        data: Cow::Borrowed(pilot_ratings),
         length: pilot_ratings.len(),
         failed: status.failed,
     })
@@ -125,7 +126,7 @@ async fn get_mil_pilot_ratings_datafeed(data: ApiStateData) -> HttpResponse {
         .map_or(&[], |df| df.military_ratings.as_slice());
 
     HttpResponse::Ok().json(DatafeedListResponse {
-        data: military_ratings,
+        data: Cow::Borrowed(military_ratings),
         length: military_ratings.len(),
         failed: status.failed,
     })
@@ -154,7 +155,7 @@ async fn get_ger_controllers_datafeed(data: ApiStateData) -> HttpResponse {
     });
 
     HttpResponse::Ok().json(DatafeedGerListResponse {
-        data: &controllers,
+        data: Cow::Borrowed(&controllers),
         length: controllers.len(),
         failed: status.failed,
     })
@@ -178,13 +179,13 @@ async fn get_ger_pilots_datafeed(data: ApiStateData) -> HttpResponse {
     });
 
     HttpResponse::Ok().json(DatafeedGerListResponse {
-        data: &pilots,
+        data: Cow::Borrowed(&pilots),
         length: pilots.len(),
         failed: status.failed,
     })
 }
 
-#[actix_web::get("/pilots/ger")]
+#[actix_web::get("/atis/ger")]
 async fn get_ger_atis_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
     let status = &*read_lock;
@@ -201,7 +202,7 @@ async fn get_ger_atis_datafeed(data: ApiStateData) -> HttpResponse {
     });
 
     HttpResponse::Ok().json(DatafeedGerListResponse {
-        data: &atis,
+        data: Cow::Borrowed(&atis),
         length: atis.len(),
         failed: status.failed,
     })
@@ -222,7 +223,7 @@ async fn get_health_check() -> HttpResponse {
     }
 
     HttpResponse::Ok().json(Response {
-        build_hash: std::env::var("COMMIT_SHA").unwrap_or("-------".into()),
+        build_hash: std::env::var("COMMIT_SHA").unwrap_or("N/A".into()),
         timestamp: Utc::now().timestamp(),
     })
 }

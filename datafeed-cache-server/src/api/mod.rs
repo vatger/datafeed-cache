@@ -5,7 +5,6 @@ use actix_web::{App, HttpServer, middleware, web};
 
 mod handlers;
 mod state;
-pub(crate) mod types;
 
 pub(crate) async fn init_api(shared_datafeed: DatafeedSharedState) -> std::io::Result<()> {
     let api_state = web::Data::new(ApiState::new(shared_datafeed));

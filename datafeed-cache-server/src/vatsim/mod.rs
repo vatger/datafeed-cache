@@ -4,7 +4,6 @@ use tokio::sync::RwLock;
 
 pub(crate) mod datafeed;
 pub(crate) mod status;
-pub(crate) mod types;
 
 pub(crate) type DatafeedSharedState = Arc<RwLock<DatafeedStatus>>;
 
