@@ -21,6 +21,7 @@ type Error = reqwest::Error;
 #[allow(dead_code)]
 impl DatafeedClient {
     pub fn new() -> Self {
+        env_logger::init();
         dotenv::dotenv().unwrap_or_default();
 
         let base_url: String = dotenv::var("BASE_URL").unwrap_or(BASE_DEFAULT.to_string());
