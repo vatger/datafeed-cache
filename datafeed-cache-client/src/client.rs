@@ -5,6 +5,7 @@ use datafeed_cache_shared::datafeed::{
 use datafeed_cache_shared::response::{
     DatafeedGeneralResponse, DatafeedListResponse, DatafeedResponse,
 };
+use log::info;
 use reqwest::Client;
 use serde::de::DeserializeOwned;
 
@@ -21,6 +22,9 @@ type Error = reqwest::Error;
 impl DatafeedClient {
     pub fn new() -> Self {
         dotenv::dotenv().unwrap_or_default();
+        let base_url: String = dotenv::var("BASE_URL").unwrap_or(BASE_DEFAULT.to_string());
+
+        info!("Selected BASE_URL: {}", base_url);
 
         DatafeedClient {
             client: Client::default(),

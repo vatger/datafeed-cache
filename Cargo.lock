@@ -520,17 +520,18 @@ dependencies = [
 
 [[package]]
 name = "datafeed-cache-client"
-version = "0.0.1"
+version = "1.2.2"
 dependencies = [
  "datafeed-cache-shared",
  "dotenv",
+ "log",
  "reqwest",
  "serde",
 ]
 
 [[package]]
 name = "datafeed-cache-server"
-version = "1.2.1"
+version = "1.2.2"
 dependencies = [
  "actix-web",
  "chrono",
@@ -546,7 +547,7 @@ dependencies = [
 
 [[package]]
 name = "datafeed-cache-shared"
-version = "0.0.1"
+version = "1.2.2"
 dependencies = [
  "chrono",
  "serde",
