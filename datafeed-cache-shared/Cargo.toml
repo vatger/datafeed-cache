@@ -1,0 +1,9 @@
+[package]
+name = "datafeed-cache-shared"
+version = "0.0.1"
+edition = "2024"
+description = ""
+
+[dependencies]
+serde = { version = "1.0.219", features = ["derive"] }
+chrono = { version = "0.4.40", features = ["serde"] }
