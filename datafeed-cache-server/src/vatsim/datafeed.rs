@@ -45,7 +45,7 @@ impl DatafeedExt for Datafeed {
 
                 let now = Utc::now().sub(TimeDelta::minutes(2));
                 if self.pilots.len() == 0
-                    || previous.pilots.len() - self.pilots.len() > 500
+                    || previous.pilots.len() >= self.pilots.len() + 400
                     || *same_timestamp_count > 5
                     || (*same_timestamp_count > 0 && previous.general.update_timestamp < now)
                 {
