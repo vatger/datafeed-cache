@@ -11,10 +11,6 @@ cached datafeed is returned
 as the response in `data`.
 
 The API Documentation can be found in the [wiki](https://github.com/vatger/datafeed-cache/wiki).
-> [!IMPORTANT]  
-> The wiki still contains the older typescript type syntax. Semantically, the result types are identical though.
-> To view the concrete implementation of the types used, visit [the datafeed type definitions](./src/vatsim/types.rs).
-
 
 If you wish to contribute and/or make changes, please check out our contribution guide [here](CONTRIBUTING.md).
 
@@ -26,7 +22,7 @@ If you wish to contribute and/or make changes, please check out our contribution
 
 ## Prerequisites
 
-- **Rust** (tested with version 1.85.1)
+- **Rust** (version 1.85.1+)
 - **Cargo**
 - **OpenSSL** (required by *reqwest*)
 
@@ -39,14 +35,14 @@ $ git clone https://github.com/vatger/datafeed-cache.git
 $ cd datafeed-cache  
 ```
 
-You can build the application using `cargo build` or run it directly using `cargo run`, which will include the
+You can build the application using `cargo build -p datafeed-cache-server` or run it directly using `cargo run -p datafeed-cache-server`, which will include the
 compilation steps.
 
-You can also specify the type of release you would like to build (e.g. release) by specifying `cargo build --release`.
+You can also specify the type of release you would like to build (e.g. release) by specifying `cargo build --release -p datafeed-cache-server`.
 
 ### Using Docker
 
-If you prefer to use Docker for production / development, you can use the provided `docker-compose.yml` file, or create
+If you prefer to use Docker for production / development, you can use the provided `datafeed-cache-server/docker-compose.yml` file, or create
 your own.
 This compose-file will build the image and deploy it locally exposing port `8007` on the host machine.
 
