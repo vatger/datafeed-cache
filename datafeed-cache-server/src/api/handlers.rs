@@ -11,11 +11,12 @@ use datafeed_cache_shared::response::{
 use geo::{Contains, Coord};
 use serde::Serialize;
 use std::borrow::Cow;
+use std::ops::Deref;
 
 #[actix_web::get("")]
 async fn get_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     HttpResponse::Ok().json(DatafeedResponse {
         data: Cow::Borrowed(&status.data),
@@ -26,7 +27,7 @@ async fn get_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/general")]
 async fn get_general_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let datafeed = status.data.as_ref();
 
@@ -42,7 +43,7 @@ async fn get_general_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/controllers")]
 async fn get_controllers_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let controllers: &[DatafeedController] = status
         .data
@@ -59,7 +60,7 @@ async fn get_controllers_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/pilots")]
 async fn get_pilots_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let pilots: &[DatafeedPilot] = status.data.as_ref().map_or(&[], |df| df.pilots.as_slice());
 
@@ -73,7 +74,7 @@ async fn get_pilots_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/atis")]
 async fn get_atis_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let atis_slice: &[DatafeedAtis] = status.data.as_ref().map_or(&[], |df| df.atis.as_slice());
 
@@ -87,7 +88,7 @@ async fn get_atis_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/servers")]
 async fn get_servers_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let servers: &[DatafeedServer] = status.data.as_ref().map_or(&[], |df| df.servers.as_slice());
 
@@ -101,7 +102,7 @@ async fn get_servers_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/pilot_ratings")]
 async fn get_pilot_ratings_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let pilot_ratings: &[DatafeedPilotRating] = status
         .data
@@ -118,7 +119,7 @@ async fn get_pilot_ratings_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/military_ratings")]
 async fn get_mil_pilot_ratings_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let military_ratings: &[DatafeedMilitaryRating] = status
         .data
@@ -141,7 +142,7 @@ async fn get_mil_pilot_ratings_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/controllers/ger")]
 async fn get_ger_controllers_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let controllers = status.data.as_ref().map_or(Vec::new(), |df| {
         df.controllers
@@ -164,7 +165,7 @@ async fn get_ger_controllers_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/pilots/ger")]
 async fn get_ger_pilots_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let pilots = status.data.as_ref().map_or(Vec::new(), |df| {
         df.pilots
@@ -188,7 +189,7 @@ async fn get_ger_pilots_datafeed(data: ApiStateData) -> HttpResponse {
 #[actix_web::get("/atis/ger")]
 async fn get_ger_atis_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
-    let status = &*read_lock;
+    let status = read_lock.deref();
 
     let atis = status.data.as_ref().map_or(Vec::new(), |df| {
         df.atis
