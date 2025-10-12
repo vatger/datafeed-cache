@@ -5,7 +5,7 @@ COPY . .
 
 RUN cargo build -p datafeed-cache-server --release
 
-FROM debian:bookworm-20210816-slim
+FROM debian:trixie-slim
 RUN apt update && apt install -y openssl ca-certificates curl && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /tmp/dfcache/target/release/datafeed_cache_server /usr/local/bin/df-cache
 
