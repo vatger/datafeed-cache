@@ -133,3 +133,14 @@ pub struct Datafeed {
 
 pub type DatafeedRating = DatafeedFacility;
 pub type DatafeedMilitaryRating = DatafeedPilotRating;
+
+
+impl PartialEq for DatafeedController {
+    fn eq(&self, other: &Self) -> bool {
+        self.callsign == other.callsign &&
+        self.frequency == other.frequency &&
+        self.cid == other.cid
+    }
+}
+
+impl Eq for DatafeedController {}
