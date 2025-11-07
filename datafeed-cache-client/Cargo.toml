@@ -11,6 +11,9 @@ datafeed-cache-shared = { path = "../datafeed-cache-shared" }
 env_logger = "0.11.7"
 log = "0.4.27"
 
+[features]
+blocking = ["reqwest/blocking"]
+
 [lib]
 name = "datafeed_cache_client"
 path = "src/lib.rs"
