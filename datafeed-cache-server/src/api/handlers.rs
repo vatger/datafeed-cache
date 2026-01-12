@@ -8,10 +8,10 @@ use datafeed_cache_shared::datafeed::{
 use datafeed_cache_shared::response::{
     DatafeedGeneralResponse, DatafeedGerListResponse, DatafeedListResponse, DatafeedResponse,
 };
-use geo::{Contains, Coord};
 use serde::Serialize;
 use std::borrow::Cow;
 use std::ops::Deref;
+use crate::api::helper;
 
 #[actix_web::get("")]
 async fn get_datafeed(data: ApiStateData) -> HttpResponse {
@@ -144,20 +144,12 @@ async fn get_ger_controllers_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
     let status = read_lock.deref();
 
-    let controllers = status.data.as_ref().map_or(Vec::new(), |df| {
-        df.controllers
-            .iter()
-            .filter(|controller| {
-                (controller.callsign.starts_with("ED") || controller.callsign.starts_with("ET"))
-                    && controller.frequency != "199.998"
-            })
-            .cloned()
-            .collect()
-    });
+    let controllers = helper::get_ger_controllers(&status.data);
 
+    let length = controllers.len();
     HttpResponse::Ok().json(DatafeedGerListResponse {
-        data: Cow::Borrowed(&controllers),
-        length: controllers.len(),
+        data: Cow::Owned(controllers),
+        length,
         failed: status.failed,
     })
 }
@@ -167,21 +159,12 @@ async fn get_ger_pilots_datafeed(data: ApiStateData) -> HttpResponse {
     let read_lock = data.shared_state.read().await;
     let status = read_lock.deref();
 
-    let pilots = status.data.as_ref().map_or(Vec::new(), |df| {
-        df.pilots
-            .iter()
-            .filter(|pilot| {
-                let coord: Coord<f64> =
-                    Coord::from((pilot.latitude.into(), pilot.longitude.into()));
-                data.ger_poly.contains(&coord)
-            })
-            .cloned()
-            .collect()
-    });
+    let pilots = helper::get_ger_pilots(&status.data);
 
+    let length = pilots.len();
     HttpResponse::Ok().json(DatafeedGerListResponse {
-        data: Cow::Borrowed(&pilots),
-        length: pilots.len(),
+        data: Cow::Owned(pilots),
+        length,
         failed: status.failed,
     })
 }
@@ -202,9 +185,43 @@ async fn get_ger_atis_datafeed(data: ApiStateData) -> HttpResponse {
             .collect()
     });
 
+    let length = atis.len();
     HttpResponse::Ok().json(DatafeedGerListResponse {
-        data: Cow::Borrowed(&atis),
-        length: atis.len(),
+        data: Cow::Owned(atis),
+        length,
+        failed: status.failed,
+    })
+}
+
+#[actix_web::get("/stats")]
+async fn get_stats(data: ApiStateData) -> HttpResponse {
+    #[derive(Serialize)]
+    struct StatsResponse {
+        len_pilots: usize,
+        len_controllers: usize,
+        len_pilots_ger: usize,
+        len_controllers_ger: usize,
+        failed: bool,
+    }
+
+    let read_lock = data.shared_state.read().await;
+    let status = read_lock.deref();
+
+    let ger_pilots = helper::get_ger_pilots(&status.data);
+    let ger_controllers = helper::get_ger_controllers(&status.data);
+
+    let (len_pilots, len_controllers) = match &status.data {
+        Some(df) => {
+            (df.pilots.len(), df.controllers.len())
+        },
+        None => (0, 0),
+    };
+
+    HttpResponse::Ok().json(StatsResponse {
+        len_pilots,
+        len_controllers,
+        len_pilots_ger: ger_pilots.len(),
+        len_controllers_ger: ger_controllers.len(),
         failed: status.failed,
     })
 }

@@ -36,3 +36,13 @@ where
     pub length: usize,
     pub failed: bool,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct DatafeedGerStatsResponse
+{
+    pub len_pilots: usize,
+    pub len_controllers: usize,
+    pub len_pilots_ger: usize,
+    pub len_controllers_ger: usize,
+    pub failed: bool,
+}

@@ -5,6 +5,7 @@ use actix_web::{App, HttpServer, middleware, web};
 
 mod handlers;
 mod state;
+mod helper;
 
 pub(crate) async fn init_api(shared_datafeed: DatafeedSharedState) -> std::io::Result<()> {
     let api_state = web::Data::new(ApiState::new(shared_datafeed));
@@ -28,7 +29,8 @@ pub(crate) async fn init_api(shared_datafeed: DatafeedSharedState) -> std::io::R
                     .service(handlers::get_mil_pilot_ratings_datafeed)
                     .service(handlers::get_ger_controllers_datafeed)
                     .service(handlers::get_ger_pilots_datafeed)
-                    .service(handlers::get_ger_atis_datafeed),
+                    .service(handlers::get_ger_atis_datafeed)
+                    .service(handlers::get_stats),
             )
             .service(handlers::get_health_check)
     })
