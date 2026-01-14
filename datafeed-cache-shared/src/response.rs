@@ -1,4 +1,5 @@
 use crate::datafeed::{Datafeed, DatafeedGeneral};
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 
@@ -38,11 +39,11 @@ where
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct DatafeedGerStatsResponse
-{
+pub struct DatafeedGerStatsResponse {
     pub len_pilots: usize,
     pub len_controllers: usize,
     pub len_pilots_ger: usize,
     pub len_controllers_ger: usize,
     pub failed: bool,
+    last_update: Option<DateTime<Utc>>,
 }

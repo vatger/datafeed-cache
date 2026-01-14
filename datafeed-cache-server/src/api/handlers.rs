@@ -1,6 +1,7 @@
+use crate::api::helper;
 use crate::api::state::ApiStateData;
 use actix_web::HttpResponse;
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 use datafeed_cache_shared::datafeed::{
     DatafeedAtis, DatafeedController, DatafeedMilitaryRating, DatafeedPilot, DatafeedPilotRating,
     DatafeedServer,
@@ -11,7 +12,6 @@ use datafeed_cache_shared::response::{
 use serde::Serialize;
 use std::borrow::Cow;
 use std::ops::Deref;
-use crate::api::helper;
 
 #[actix_web::get("")]
 async fn get_datafeed(data: ApiStateData) -> HttpResponse {
@@ -202,6 +202,7 @@ async fn get_stats(data: ApiStateData) -> HttpResponse {
         len_pilots_ger: usize,
         len_controllers_ger: usize,
         failed: bool,
+        last_update: Option<DateTime<Utc>>,
     }
 
     let read_lock = data.shared_state.read().await;
@@ -211,9 +212,7 @@ async fn get_stats(data: ApiStateData) -> HttpResponse {
     let ger_controllers = helper::get_ger_controllers(&status.data);
 
     let (len_pilots, len_controllers) = match &status.data {
-        Some(df) => {
-            (df.pilots.len(), df.controllers.len())
-        },
+        Some(df) => (df.pilots.len(), df.controllers.len()),
         None => (0, 0),
     };
 
@@ -223,6 +222,10 @@ async fn get_stats(data: ApiStateData) -> HttpResponse {
         len_pilots_ger: ger_pilots.len(),
         len_controllers_ger: ger_controllers.len(),
         failed: status.failed,
+        last_update: match status.data {
+            Some(df) => Some(df.general.update_timestamp),
+            None => None,
+        },
     })
 }
 
