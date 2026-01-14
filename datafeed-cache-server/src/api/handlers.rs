@@ -222,7 +222,7 @@ async fn get_stats(data: ApiStateData) -> HttpResponse {
         len_pilots_ger: ger_pilots.len(),
         len_controllers_ger: ger_controllers.len(),
         failed: status.failed,
-        last_update: match status.data {
+        last_update: match &status.data {
             Some(df) => Some(df.general.update_timestamp),
             None => None,
         },
